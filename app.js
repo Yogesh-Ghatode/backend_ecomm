@@ -4,6 +4,9 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
 const productRoutes = require("./routes/product");
 const orderRoutes = require("./routes/order");
 const userRoutes = require('./routes/user');
@@ -37,6 +40,36 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+const options = {
+   definition : {
+       openapi : "3.0.0",
+       info : {
+           title : "Backend ecommerce Node JS API Project", 
+           version : "1.0.0"
+       },
+       servers : [
+          {
+            url : "http://localhost:3000"
+          }
+        ]
+   }, 
+   apis : ['./app.js' ]
+}
+
+const swaggerSpec =  swaggerJSDoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+/**
+ * @swagger
+ * /products/:
+ *   get: 
+ *       summary : Get all products
+ *       description : This api is used to get all products in our ecommerce project
+ *       responses : 
+ *            200: 
+ *               description : testing Get all products method
+ */
 
 // Routes which should handle requests
 app.use("/products", productRoutes);
