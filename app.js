@@ -60,6 +60,40 @@ const options = {
 const swaggerSpec =  swaggerJSDoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+//  Swagger Schema :
+
+/**
+ * @swagger 
+ *   components:
+ *      schemas:
+ *         orderSchema:
+ *             type: object
+ *             properties:
+ *                 _id:
+ *                    type: string
+ *                 name:
+ *                    type: string
+ *                 quantity:
+ *                    type: integer
+ */
+
+/**
+ * @swagger 
+ *   components:
+ *      schemas:
+ *         productSchema:
+ *             type: object
+ *             properties:
+ *                 _id:
+ *                    type: string
+ *                 name:
+ *                    type: string
+ *                 price: 
+ *                    type: integer
+ *                 category:
+ *                    type: string
+ */
+
 /**
  * @swagger
  * /products/:
@@ -70,6 +104,86 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *            200: 
  *               description : testing Get all products method
  */
+
+ /**
+ * @swagger
+ * /products/{productId}:
+ *   get: 
+ *       summary : Get specific products
+ *       description : This api is used to get specific products in our ecommerce project
+ *       parameters : 
+ *        - in : path
+ *          name : productId
+ *          required : true
+ *          decription : alphanumeric number
+ *       responses : 
+ *            200: 
+ *               description : testing get specific products method
+ *               contenst: 
+ *                   application/json:
+ *                       schema:
+ *                          type: array
+ *                          item:
+ *                             $ref:'#components/schemas/productSchema'
+ */
+
+/**
+ * @swagger
+ * /products/search/{productId}:
+ *   get: 
+ *       summary : Get specific products by search
+ *       description : This api is used to get specific products by search in our ecommerce project
+ *       parameters : 
+ *        - in : path
+ *          name : productId
+ *          required : true
+ *          decription : alphanumeric number
+ *       responses : 
+ *            200: 
+ *               description : testing get specific products by search method
+ *               contenst: 
+ *                   application/json:
+ *                       schema:
+ *                          type: array
+ *                          item:
+ *                             $ref:'#components/schemas/productSchema'
+ */
+
+
+/**
+ * @swagger
+ * /orders/:
+ *   get: 
+ *       summary : Get all orders
+ *       description : This api is used to get all orders in our ecommerce project
+ *       responses : 
+ *            200: 
+ *               description : testing Get all order method
+ */
+
+
+/**
+ * @swagger
+ * /orders/{orderId}:
+ *   get: 
+ *       summary : Get specific order
+ *       description : This api is used to get specific order in our ecommerce project
+ *       parameters : 
+ *        - in : path
+ *          name : orderId
+ *          required : true
+ *          decription : alphanumeric number
+ *       responses : 
+ *            200: 
+ *               description : testing get specific order method
+ *               contenst: 
+ *                   application/json:
+ *                       schema:
+ *                          type: array
+ *                          item:
+ *                             $ref:'#components/schemas/orderSchema'
+ */
+
 
 // Routes which should handle requests
 app.use("/products", productRoutes);
